@@ -4,6 +4,7 @@ import 'screens/auth/login_page.dart';
 import 'screens/auth/register_page.dart';
 import 'screens/auth/forgot_pass_page.dart';
 import 'screens/home_screen.dart';
+import 'screens/profile/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/forgot-password',
       builder: (context, state) => const ForgotPasswordPage(),
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfilePage(),
     ),
   ],
 );
