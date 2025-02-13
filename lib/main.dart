@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'providers/auth/auth_provider.dart';
 import 'screens/auth/login_page.dart';
 import 'screens/auth/register_page.dart';
 import 'screens/auth/forgot_pass_page.dart';
 import 'screens/home_screen.dart';
 import 'screens/profile/profile_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 final _router = GoRouter(
   initialLocation: '/',
+  redirect: (BuildContext context, GoRouterState state) async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstTime = prefs.getBool('is_first_time') ?? true;
+    final isAuthenticated = prefs.getBool('is_authenticated') ?? false;
+
+    if (isFirstTime && state.uri.path != '/login') {
+      return '/login';
+    }
+
+    if (!isAuthenticated && !isFirstTime && state.uri.path != '/profile') {
+      return '/profile';
+    }
+
+    if (isAuthenticated && state.uri.path == '/login') {
+      return '/';
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       path: '/',
@@ -36,11 +60,11 @@ final _router = GoRouter(
   ],
 );
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       routerConfig: _router,
       title: 'History Timeline',

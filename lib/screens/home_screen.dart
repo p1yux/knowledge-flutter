@@ -275,7 +275,7 @@ class HomeScreen extends StatelessWidget {
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           if (index == 3) {
-            context.go('/login');
+            context.go('/profile');
           }
         },
         items: const [

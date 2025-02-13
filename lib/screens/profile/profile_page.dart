@@ -5,17 +5,20 @@ import '../../components/checkbox/radio.dart';
 import '../../components/buttons/yellow_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../providers/auth/auth_provider.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   static const String route = '/profile';
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage> {
   final _nameController = TextEditingController();
   final _locationController = TextEditingController();
   String? _selectedPronoun;
@@ -121,8 +124,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30),
                     YellowButton(
                       text: 'Save Changes',
-                      onPressed: () {
-                        // Handle save changes
+                      onPressed: () async {
+                        // Save profile data here if needed
+
+                        // Mark user as authenticated and navigate to home
+                        await ref.read(authProvider.notifier).signIn();
+
+                        if (context.mounted) {
+                          context.go('/');
+                        }
                       },
                     ),
                   ],
