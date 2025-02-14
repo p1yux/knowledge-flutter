@@ -22,6 +22,13 @@ final _router = GoRouter(
     final isFirstTime = prefs.getBool('is_first_time') ?? true;
     final isAuthenticated = prefs.getBool('is_authenticated') ?? false;
 
+    // Don't redirect if trying to access auth-related pages
+    if (state.uri.path == '/register' ||
+        state.uri.path == '/forgot-password' ||
+        state.uri.path == '/login') {
+      return null;
+    }
+
     if (isFirstTime && state.uri.path != '/login') {
       return '/login';
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/forms/auth/login.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,13 +13,13 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 40),
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               'Welcome Back! 👋',
               style: TextStyle(
                 fontSize: 24,
@@ -26,16 +27,16 @@ class LoginPage extends StatelessWidget {
                 color: Color(0xFF1E3A8A),
               ),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'Please sign in to continue',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
             ),
-            SizedBox(height: 32),
-            LoginForm(),
+            const SizedBox(height: 32),
+            const LoginForm(),
           ],
         ),
       ),
